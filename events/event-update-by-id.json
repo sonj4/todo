@@ -1,5 +1,5 @@
 {
-    "httpMethod": "POST",
+    "httpMethod": "PUT",
     "body": "{\"id\": \"4\", \"name\": \"sonjaaaaaa Todo Item\", \"done\": \"false\"}"
 }
   

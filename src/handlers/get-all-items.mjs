@@ -3,15 +3,15 @@
 // Create a DocumentClient that represents the query to add an item
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, ScanCommand } from "@aws-sdk/lib-dynamodb";
-//const client = new DynamoDBClient({});
-const client = new DynamoDBClient({
-  endpoint: "http://host.docker.internal:8000",
-  region: "local-env",
-  credentials: {
-    accessKeyId: "fakeMyKeyId",
-    secretAccessKey: "fakeSecretAccessKey",
-  },
-});
+const client = new DynamoDBClient({});
+// const client = new DynamoDBClient({
+//   endpoint: "http://host.docker.internal:8000",
+//   region: "local-env",
+//   credentials: {
+//     accessKeyId: "fakeMyKeyId",
+//     secretAccessKey: "fakeSecretAccessKey",
+//   },
+// });
 
 const ddbDocClient = DynamoDBDocumentClient.from(client);
 

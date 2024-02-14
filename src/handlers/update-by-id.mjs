@@ -3,7 +3,7 @@
 // Create a DocumentClient that represents the query to add an item
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
-import { v4 as uuidv4 } from "uuid";
+
 const client = new DynamoDBClient({});
 // const client = new DynamoDBClient({
 //   endpoint: "http://host.docker.internal:8000",
@@ -21,10 +21,10 @@ const tableName = process.env.SAMPLE_TABLE;
 /**
  * A simple example includes a HTTP post method to add one item to a DynamoDB table.
  */
-export const putItemHandler = async (event) => {
-  if (event.httpMethod !== "POST") {
+export const updateItemHandler = async (event) => {
+  if (event.httpMethod !== "PUT") {
     throw new Error(
-      `postMethod only accepts POST method, you tried: ${event.httpMethod} method.`
+      `putMethod only accepts PUT method, you tried: ${event.httpMethod} method.`
     );
   }
   // All log statements are written to CloudWatch
@@ -32,7 +32,8 @@ export const putItemHandler = async (event) => {
 
   // Get id and name from the body of the request
   const body = JSON.parse(event.body);
-  const id = uuidv4();
+  const id = event.pathParameters.id;
+
   const name = body.name;
   const done = body.done;
 
@@ -51,7 +52,7 @@ export const putItemHandler = async (event) => {
     return {
       statusCode: 500,
       body: JSON.stringify({
-        error: "Failed to add item",
+        error: "Failed to update item",
         details: err.message,
       }),
     };
@@ -62,7 +63,7 @@ export const putItemHandler = async (event) => {
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Headers": "Content-Type",
-      "Access-Control-Allow-Methods": "OPTIONS,POST,GET,DELETE",
+      "Access-Control-Allow-Methods": "OPTIONS,PUT,POST,GET,DELETE",
     },
     body: JSON.stringify(body),
   };
